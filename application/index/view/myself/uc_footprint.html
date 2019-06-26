@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>我的足迹</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/uc.css" rel="stylesheet"/>
+<script type="text/javascript" src="/static/index/js/layer/layer.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery-1.8.3.js"></script>
+</head>
+<body>
+    <!--头部-->
+    <div class="topper">
+        <div class="wrapper">
+            <div class="left-bar">
+                <div class="back-home divider">
+                    <em></em><a href="{:url('Index/index')}">商城首页</a>
+                </div>
+                
+            </div>
+            <div class="right-bar">
+                {if $list==null}
+                 <div class="item"><a href="{:url('login/index')}">登录<span class="txt-theme"></span></a></div>
+                <div class="logout divider"><a href="{:url('login/sign')}">注册</a></div>
+                <span class=""></span>
+                <div class="cart"><em></em><a href="">购物车</a></div>
+                <div class="order"><em></em><a href="">我的订单</a></div>
+                <div class="fav"><em></em><a href="">我的收藏</a></div>
+                <div class="help"><em></em><a href="">个人中心</a></div>
+            {else /}
+                <div class="item"><a href="{:url('order/uc')}">欢迎您:<span style="color:red" class="txt-theme">{$list}</span></a></div>
+                <div class="logout divider"><a href="{:url('login/logout')}">退出</a></div>
+                <span class=""></span>
+            
+                <div class="cart"><em></em><a href="{:url('Car/cart')}">购物车</a></div>
+                <div class="order"><em></em><a href="{:url('Order/uc_order')}">我的订单</a></div>
+                <div class="fav"><em></em><a href="{:url('Myself/uc_fav')}">我的收藏</a></div>
+                <div class="help"><em></em><a href="{:url('Order/uc')}">个人中心</a></div>
+            {/if}
+            </div>
+        </div>
+    </div>>
+    <div class="uc-header-bg">
+        <div class="uc-header wrapper">
+            <a class="logo" href="{:url('Index/index')}"><img src="/static/index/img/logo2.png" alt="" /></a>
+            <div class="back-home"><a href="{:url('Index/index')}">返回商城首页</a></div>
+            <ul class="uc-nav">
+                <li><a href="">首页</a></li>
+                <li class="toggle">
+                    <span class="label">账户设置<i class="iconfont"></i></span>
+                    <div class="toggle-cont">
+                        <a href="{:url('Myself/uc_account')}">个人信息</a>
+                        <a href="{:url('Safe/uc_safe')}">安全设置</a>
+                        <a href="{:url('Order/uc_address')}">收货地址</a>
+                    </div>
+                </li>
+                
+            </ul>
+            <div class="schbox">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="{:url('Index/index')}">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span><a href="{:url('Order/uc')}">个人中心</a></span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+           <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_order')}">我的订单</a></li>
+                        <li><a class="active" href="{:url('Myself/uc_fav')}">我的收藏</a></li>
+                        <li><a href="{:url('Myself/uc_footprint')}">浏览历史</a></li>
+                    </ul>
+                    
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Myself/uc_account')}">账户信息</a></li>
+                        <li><a href="{:url('Safe/uc_safe')}">账户安全</a></li>
+                        <li><a href="{:url('Order/uc_address')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_allevaluate')}">商品评价</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">我的足迹</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-bar mt10">
+                            <div class="fl">以下是您最近一周的商品浏览记录</div>
+                            <div class="fr">
+                                <label class="check"><input type="checkbox" name=""  /><span class="ml10 mr10">全选</span></label><a class="del iconfont icon-shanchu" onclick="alldel()"></a>
+                            </div>
+                            <script>
+                                    function alldel(){
+
+                                        var a = $(".checked").length;
+                                        // console.log(a);     
+                                        if (a > 0) {
+                                            // alert('aaa');
+                                            $.ajax({
+                                            type:'get',
+                                            url:"{:url('Myself/delzuji')}",
+                                            data:{state:4},
+                                            success:function(data){
+                                                if (data>0) {
+                                                    location="";
+                                                    // alert("删除成功");
+                                                    
+                                                }else{
+                                                    alert("无历史记录");
+
+                                                }
+                                            }
+                                        })
+                                        }else{
+                                            alert("没有选中项");
+                                        }
+                                        
+                                    }
+                                </script>
+                        </div>
+
+                        <div class="footprint-box">
+
+                            
+                            
+                            <div class="footprint-item">
+                                <div class="f-info">
+                                    <span class="f-date">今天</span><span class="f-time"></span><!-- <a class="f-del" href="{:url('Myself/delzuji')}?state=1">删除</a> -->
+                                    <a onclick="jtdel()">删除</a>
+                                </div>
+                                <script>
+                                    function jtdel(){
+                                        $.ajax({
+                                            type:'get',
+                                            url:"{:url('Myself/delzuji')}",
+                                            data:{state:1},
+                                            success:function(data){
+                                                if (data>0) {
+                                                    // alert("删除成功");
+                                                    location="";
+                                                }else{
+                                                    alert("无历史记录");
+
+                                                }
+                                            }
+                                        })
+                                    }
+                                </script>
+                               <div class="f-goods-list clearfix"> 
+                                    <div class="f-goods-list clearfix">
+                                        {foreach $zuji as $val}
+                                        {if $time-$val.addtime<'86400'}
+                                        <div class="item">
+                                            <!-- <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a> -->
+                                            <a href="{:url('Shop/goods_detail')}?id={$val.id}""><img class="figure" src="/goods_uploads/{$val.img}" alt=""/></a>
+                                            <div class="cont">
+                                                <div class="name"><a href="{:url('Shop/goods_detail')}?id={$val.id}">{$val.content}</a></div>
+                                                <div class="price">
+                                                    <span class="n">￥{$val.price}</span><span class="s">￥{$val.price+200}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         {/if}
+                                         {/foreach}
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="footprint-item">
+                                <div class="f-info">
+                                    <span class="f-date">昨天</span><span class="f-time"></span><!-- <a class="f-del" href="{:url('Myself/delzuji')}?state=2">删除</a> -->
+                                    <a onclick="ztdel()">删除</a>
+                                </div>
+                                <script>
+                                    function ztdel(){
+                                        $.ajax({
+                                            type:'get',
+                                            url:"{:url('Myself/delzuji')}",
+                                            data:{state:2},
+                                            success:function(data){
+                                                if (data>0) {
+                                                    // alert("删除成功");
+                                                    location="";
+                                                }else{
+                                                    alert("无历史记录");
+
+                                                }
+                                                
+                                            }
+                                        })
+                                    }
+                                </script>
+                               <div class="f-goods-list clearfix"> 
+                                    <div class="f-goods-list clearfix">
+                                        {foreach $zuji as $val}
+                                        {if $time-$val.addtime>'86400' && $time-$val.addtime<'172800'}
+                                        <div class="item">
+                                            <!-- <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a> -->
+                                            <a href="{:url('Shop/goods_detail')}?id={$val.id}""><img class="figure" src="/goods_uploads/{$val.img}" alt=""/></a>
+                                            <div class="cont">
+                                                <div class="name"><a href="{:url('Shop/goods_detail')}?id={$val.id}">{$val.content}</a></div>
+                                                <div class="price">
+                                                    <span class="n">￥{$val.price}</span><span class="s">￥{$val.price+200}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         {/if}
+                                         {/foreach}
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="footprint-item">
+                                <div class="f-info">
+                                    <span class="f-date">更早</span><span class="f-time"></span><!-- <a class="f-del" href="{:url('Myself/delzuji')}?state=3">删除</a> -->
+                                     <a onclick="del()">删除</a>
+                                </div>
+                                <script>
+                                    function del(){
+                                        $.ajax({
+                                            type:'get',
+                                            url:"{:url('Myself/delzuji')}",
+                                            data:{state:3},
+                                            success:function(data){
+                                                if (data>0) {
+                                                    // alert("删除成功");
+                                                    location="";
+                                                }else{
+                                                    alert("无历史记录");
+
+                                                }
+                                            }
+                                        })
+                                    }
+                                </script>
+                               <div class="f-goods-list clearfix"> 
+                                    <div class="f-goods-list clearfix">
+                                        {foreach $zuji as $val}
+                                        {if $time-$val.addtime>'172800'}
+                                        <div class="item">
+                                           <!--  <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a> -->
+                                            <a href="{:url('Shop/goods_detail')}?id={$val.id}""><img class="figure" src="/goods_uploads/{$val.img}" alt=""/></a>
+                                            <div class="cont">
+                                                <div class="name"><a href="{:url('Shop/goods_detail')}?id={$val.id}">{$val.content}</a></div>
+                                                <div class="price">
+                                                    <span class="n">￥{$val.price}</span><span class="s">￥{$val.price+200}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         {/if}
+                                         {/foreach}
+                                    </div>    
+                                </div>
+                            </div>
+                             
+                            
+
+                            <!-- <div class="footprint-item">
+                                <div class="f-info">
+                                    <span class="f-date">昨天</span><span class="f-time">2016-06-14</span><a class="f-del" href="">删除</a>
+                                </div>
+                                <div class="f-goods-list clearfix">
+                                    <div class="item">
+                                        <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a>
+                                        <a href=""><img class="figure" src="/static/index/uploads/34.jpg" alt="" /></a>
+                                        <div class="cont">
+                                            <div class="name"><a href="">小米4k曲面显示器</a></div>
+                                            <div class="price">
+                                                <span class="n">￥699</span><span class="s">1998</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a>
+                                        <a href=""><img class="figure" src="/static/index/uploads/34.jpg" alt="" /></a>
+                                        <div class="cont">
+                                            <div class="name"><a href="">小米4k曲面显示器</a></div>
+                                            <div class="price">
+                                                <span class="n">￥699</span><span class="s">1998</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a>
+                                        <a href=""><img class="figure" src="/static/index/uploads/34.jpg" alt="" /></a>
+                                        <div class="cont">
+                                            <div class="name"><a href="">小米4k曲面显示器</a></div>
+                                            <div class="price">
+                                                <span class="n">￥699</span><span class="s">1998</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="" class="g-del"><i class="iconfont icon-shanchu"></i></a>
+                                        <a href=""><img class="figure" src="/static/index/uploads/34.jpg" alt="" /></a>
+                                        <div class="cont">
+                                            <div class="name"><a href="">小米4k曲面显示器</a></div>
+                                            <div class="price">
+                                                <span class="n">￥699</span><span class="s">1998</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="footprint-item end">
+                                <div class="nomore">没有更多了哦</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--脚部-->
+    <div class="fatfooter">
+
+    </div>
+    <!--脚部-->
+</body>
+<script src="/static/index/js/jquery.js"></script>
+<link rel="stylesheet" href="/static/index/js/icheck/style.css"/>
+<script src="/static/index/js/icheck/icheck.min.js"></script>
+<script src="/static/index/js/laydate/laydate.js"></script>
+<script src="/static/index/js/global.js"></script>
+<script>
+$('.check input').iCheck({
+            checkboxClass: 'sty1-checkbox'
+        });
+</script>
+</html>

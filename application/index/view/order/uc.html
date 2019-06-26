@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>商城详情页</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/uc.css" rel="stylesheet"/>
+    <!-- 分页 -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!-- 分页 -->
+</head>
+<body>
+    <!--头部-->
+    <div class="topper">
+        <div class="wrapper">
+            <div class="left-bar">
+                <div class="back-home divider">
+                    <em></em><a href="index.html">商城首页</a>
+                </div>
+                <div class="item"><a href="">商家中心</a></div>
+            </div>
+            <div class="right-bar">
+                {if $list==null}
+                 <div class="item"><a href="{:url('login/index')}">登录<span class="txt-theme"></span></a></div>
+                <div class="logout divider"><a href="{:url('login/sign')}">注册</a></div>
+                <span class=""></span>
+                <div class="cart"><em></em><a href="">购物车<span class="txt-theme">2</span>件</a></div>
+                <div class="order"><em></em><a href="">我的订单</a></div>
+                <div class="fav"><em></em><a href="">我的收藏</a></div>
+                <div class="help"><em></em><a href="">个人中心</a></div>
+            {else /}
+                <div class="item"><a href="{:url('order/uc')}">欢迎您:<span style="color:red" class="txt-theme">{$list}</span></a></div>
+                <div class="logout divider"><a href="{:url('login/logout')}">退出</a></div>
+                <span class=""></span>
+            
+                <div class="cart"><em></em><a href="{:url('Car/cart')}">购物车<span class="txt-theme">2</span>件</a></div>
+                <div class="order"><em></em><a href="{:url('Order/uc_order')}">我的订单</a></div>
+                <div class="fav"><em></em><a href="{:url('Myself/uc_fav')}">我的收藏</a></div>
+                <div class="help"><em></em><a href="{:url('Order/uc')}">个人中心</a></div>
+            {/if}
+            </div>
+        </div>
+    </div>
+    <div class="uc-header-bg">
+        <div class="uc-header wrapper">
+            <a class="logo" href="{:url('Index/index')}"><img src="/static/index/img/logo2.png" alt="" /></a>
+            <div class="back-home"><a href="{:url('Index/index')}">返回商城首页</a></div>
+            <ul class="uc-nav">
+                <li><a href="">首页</a></li>
+                <li class="toggle">
+                    <span class="label">账户设置<i class="iconfont"></i></span>
+                    <div class="toggle-cont">
+                        <a href="{:url('Myself/uc_account')}">个人信息</a>
+                        <a href="{:url('Safe/uc_safe')}">安全设置</a>
+                        <a href="{:url('Order/uc_address')}">收货地址</a>
+                    </div>
+                </li>
+                
+            </ul>
+            <div class="schbox">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="{:url('Index/index')}">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span><a href="{:url('Order/uc')}">个人中心</a></span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_order')}">我的订单</a></li>
+                        <li><a class="active" href="{:url('Myself/uc_fav')}">我的收藏</a></li>
+                        <li><a href="{:url('Myself/uc_footprint')}">浏览历史</a></li>
+                        <li><a href="{:url('Order/uc_apply_refund')}">退货</a></li>
+                    </ul>
+                    
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Myself/uc_account')}">账户信息</a></li>
+                        <li><a href="{:url('Safe/uc_safe')}">账户安全</a></li>
+                        <li><a href="{:url('Order/uc_address')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_allevaluate')}">商品评价</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel account-panel">
+                    <div class="user-info">
+                        <a href=""><img class="headpic" src="/static/index/uploads/4.jpg" alt="头像" /></a>
+                        <div class="info">
+                            <div><span class="name">{$list}</span><span class="wel">下午好</span></div>
+                            <a href="" class="label">普通会员</a>
+                            <a href="{:url('Myself/uc_account')}" class="edit">修改个人信息></a>
+                        </div>
+                    </div>
+                    <div class="quick-menu">
+                        <div class="item">
+                            <a href=""><img class="ico" src="/static/index/img/ico/uc-aq.png"/>账户安全：较高</a>
+                        </div>
+                        <div class="item">
+                            <a href=""><img class="ico" src="/static/index/img/ico/uc-phone.png"/>绑定手机：136********66</a>
+                        </div>
+                        <div class="item">
+                            <a href="{:url('Order/uc_address')}"><img class="ico" src="/static/index/img/ico/uc-dizhi.png"/>我的收货地址</a>
+                        </div>
+                        <div class="item">
+                            <a href=""><img class="ico" src="/static/index/img/ico/uc-qianbao.png"/>我的钱包</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uc-panel home-order">
+                    <div class="col">
+                        <img src="/static/index/img/ico/uc-order1.png" class="ico" />
+                        <div class="bd">
+                            <div class="tit">待支付的订单：<span class="num"></span></div>
+                            <a class="more" href="{:url('order/uc_order')}?state=5">查看待支付订单></a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="/static/index/img/ico/uc-order2.png" class="ico" />
+                        <div class="bd">
+                            <div class="tit">待发货的订单：<span class="num"></span></div>
+                            <a class="more" href="{:url('order/uc_order')}?state=1">查看待发货订单></a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="/static/index/img/ico/uc-order3.png" class="ico" />
+                        <div class="bd">
+                            <div class="tit">待收货的订单：<span class="num"></span></div>
+                            <a class="more" href="{:url('order/uc_order')}?state=2">查看待收货订单></a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="/static/index/img/ico/uc-order4.png" class="ico" />
+                        <div class="bd">
+                            <div class="tit">待评价的订单：<span class="num"></span></div>
+                            <a class="more" href="{:url('order/uc_order')}?state=3">查看待评价订单></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uc-panel home-wuliu">
+                    <div class="home-wuliu-hd">
+                        我的物流
+                    </div>
+                    <div class="home-wuliu-bd">
+                        {foreach $wuliu as $val}
+                        <div class="item">
+                            <a href="{:url('Order/queren')}?state=3&id={$val.id}" class="confirm ui-btn-theme uc-btn-md">确认收货</a>
+                            <div class="cont">
+                                <img src="/goods_uploads/{$val.img}" alt="" class="figure" width="50px"/>
+                                <div class="info">
+                                    <div class="status">快件已签收，感谢您使用中通快递！</div>
+                                    <div>
+                                        <span class="time">2016-05-20  16:04:28</span>
+                                        <!-- <a href="">查看物流明细</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+                        {$wuliu|raw}
+                        <!-- <div class="item">
+                            <a href="" class="confirm ui-btn-theme uc-btn-md">确认收货</a>
+                            <div class="cont">
+                                <img src="/static/index/uploads/3.jpg" alt="" class="figure" />
+                                <div class="info">
+                                    <div class="status">快件已签收，感谢您使用中通快递！</div>
+                                    <div>
+                                        <span class="time">2016-05-20  16:04:28</span>
+                                        <a href="">查看物流明细</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a href="" class="confirm ui-btn-theme uc-btn-md">确认收货</a>
+                            <div class="cont">
+                                <img src="/static/index/uploads/3.jpg" alt="" class="figure" />
+                                <div class="info">
+                                    <div class="status">快件已签收，感谢您使用中通快递！</div>
+                                    <div>
+                                        <span class="time">2016-05-20  16:04:28</span>
+                                        <a href="">查看物流明细</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--脚部-->
+    <div class="fatfooter">
+
+    </div>
+    <!--脚部-->
+</body>
+<script src="/static/index/js/jquery.js"></script>
+<link rel="stylesheet" href="/static/index/js/icheck/style.css"/>
+<script src="/static/index/js/icheck/icheck.min.js"></script>
+<script src="/static/index/js/laydate/laydate.js"></script>
+<script src="/static/index/js/global.js"></script>
+</html>

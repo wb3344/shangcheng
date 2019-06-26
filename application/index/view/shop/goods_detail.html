@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>商城详情页</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/goods-detail.css" rel="stylesheet"/>
+    <script src="/static/index/js/jquery-1.8.3.min.js"></script>
+    <!-- <script src="/static/index/js/layer/layer.js/"></script> -->
+   
+</head>
+<body>
+    <!--头部-->
+        <div class="topper">
+            <div class="wrapper">
+                <div class="left-bar">
+                    <div class="back-home divider">
+                        <em></em><a href="{:url('Index/index')}">商城首页</a>
+                    </div>
+                    
+                </div>
+                <div class="right-bar">
+                {if $list==null}
+                     <div class="item"><a href="{:url('login/index')}">登录<span class="txt-theme"></span></a></div>
+                    <div class="logout divider"><a href="{:url('login/sign')}">注册</a></div>
+                    <span class=""></span>
+                    <span class=""></span>
+               
+                    <div class="cart"><em></em><a href="">购物车<span class="txt-theme">2</span>件</a></div>
+
+                    <div class="order"><em></em><a href="">我的订单</a></div>
+                    <div class="fav"><em></em><a href="">我的收藏</a></div>
+                {else /}
+                    <div class="item"><a href="{:url('order/uc_msg')}">欢迎您:<span style="color:red" class="txt-theme">{$list}</span></a></div>
+                    <div class="logout divider"><a href="{:url('login/logout')}">退出</a></div>
+                    <span class=""></span>
+                    <span class=""></span>
+               
+                    <div class="cart"><em></em><a href="{:url('Car/cart')}">购物车<span class="txt-theme"></span></a></div>
+
+                    <div class="order"><em></em><a href="{:url('Order/uc_order')}">我的订单</a></div>
+                    <div class="fav"><em></em><a href="{:url('Myself/uc_fav')}">我的收藏</a></div>
+                {/if}
+                    
+                    <div class="help"><em></em><a href="">帮助中心</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="shop-header wrapper">
+            <div class="logo">
+                <a href="index.html"><img src="/static/index/img/logo.png" alt="logo" /></a>
+            </div>
+            <div class="shop-meta">
+                <span class="ico"></span>
+                
+            </div>
+            <div class="shop-schbox">
+                <div class="layout">
+                    <form action="{:url('Shop/list_goods')}" method="get">
+                        <input class="search-txt" placeholder="搜流行宝贝" name="sousuo">
+                        <button class="search-btn site">搜全站</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="shop-nav-box">
+            <div class="shop-nav wrapper">
+                <div class="shop-nav-all">
+                    <a href="">所有宝贝</a>
+                </div>
+                <ul class="shop-nav-rec">
+                    <li><a href="{:url('Index/index')}">首页</a></li>
+                    <li><a href="{:url('Shop/list_goods')}?xinpin='xinpin'">新品首发</a></li>
+                    <li><a href="{:url('Shop/list_goods')}?dijia='dijia'">低价抢购</a></li>
+                    <li><a href="{:url('Shop/list_goods')}?hot='hot'">热销</a></li>
+                </ul>
+            </div>
+        </div>
+    <!--头部-->
+    <div class="wrapper">
+
+        {foreach $a as $v}
+        <div class="detail-top clearfix">
+            <div class="detail-goods">
+                <div class="detail-show">
+                    <div class="origin-show" >
+                        <div class="zoomup"></div>
+                        <img id="bimg" class="big-pic" src="/goods_uploads/{$v.img}" alt="{$v.type}{$v.name}" />
+                    </div>
+                    <div class="thumb-show">
+                         {foreach $b as $val}
+                        <span class="item"><img class="s-pic" src="/goods_uploads/c_{$val.image}" bsrc="/goods_uploads/{$val.image}" /></span>
+                        {/foreach}
+                        
+
+                    </div>
+                    <div class="zoom-show">
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <div class="detail-info">
+                    <input class="count-input" value="{$v.brand}"  type="hidden" name="brand" id="brand"/>
+                    <input class="count-input" value="{$v.name}"  type="hidden" name="name" id="name"/>
+                    <div class="item-title" style="font-size: 30px">{$v.type}{$v.name}</div>
+                    <div class="item-price">
+                        <span class="now" style="font-size: 25px"><input class="count-input" value="{$v.price}"  type="hidden" name="num" id="price"/>￥{$v.price}</span><span class="dft">￥{$v.price+20}</span>
+                    </div>
+                    <ul class="item-data clearfix">
+                        <li class="col-4">销量<span class="txt-theme ml10">{$v.sell}件</span></li>
+                        <li class="col-4">收藏<span class="txt-theme ml10">{$likenum}人</span></li>
+                        <li class="col-4" style="display:none;" id="kucun">库存<span class="txt-theme ml10"></span></li>
+                    </ul>
+                    <div class="sku-info">
+                        <div class="prop">
+                            <div class="dt">颜色：</div>
+                            <div class="dd">
+                                <ul class="chose-img">
+                        <!-- 遍历 -->
+                       {foreach $b as $val}
+                       <li class="zhao" style="border:1px solid #fff;">
+                        <input type="hidden" name="id" value="{$val.id}"> <input type="hidden" name="image" value="{$val.image}"><input type="hidden" name="color" value="{$val.color}">{$val.color}<img src="/goods_uploads/{$val.image}" alt="" width="46px" height="46px"/></li>
+                        {/foreach}
+                                    
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="prop">
+                            <div class="dt">尺寸：</div>
+                            <div class="dd">
+                                <ul class="chose-common">
+                                    
+                                    {foreach $size as $s}
+                                    <li class="hai" style="border:1px solid #fff;" ><input type="hidden" name="size" value="{$s}"><a>{$s}</a></li>
+                                    {/foreach}
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="prop">
+                            <div class="dt">数量：</div>
+                            <div class="dd">
+                                <div class="mod-numbox chose-num" data-max="30">
+                                    <span class="count-minus"></span>
+                                    <input class="count-input" value="1"  type="text" name="num" id="nums"/>
+                                    <span class="count-plus"></span>
+                                </div>
+                                
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="item-action">
+                        <a href="javascript:;" onclick="buy(this,{$v.id})"  class="add-cart">立即购买</a>
+                        <!-- <a href="{:url('car/buy')}?id={$v.id}" class="buy-now">立即购买</a> -->
+                       <!--  <a href="{:url('Shop/cart')}?id={$v.id}" class="buy-now">加入购物车</a> -->
+                       <a href="javascript:;" onclick="ins(this,{$v.id})"  class="add-cart">加入购物车</a>
+                    </div>
+                    <div class="item-extend">
+                        <!-- 收藏只传商品id -->
+                            <a href="" class="fav" onclick="like(this,{$v.id})">{$like}</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {/foreach}
+
+
+        <!-- 商品推荐 -->
+        <div class="ui-tabs">
+            <span class="item active">店长推荐</span>
+        </div>
+        <ul class="detail-rec clearfix">
+            {foreach $nice as $va}
+            <li>
+                <a href="{:url("Shop/goods_detail")}?id={$va.id}" class="figure"><img src="/goods_uploads/{$v.img}"></a>
+                <div class="name"><a href="{:url('Shop/goods_detail')}?id={$va.id}">{$va.type}{$va.name}</a></div>
+                <div class="price">￥{$va.price}</div>
+            </li>
+           {/foreach}
+        </ul>
+        <!-- 商品推荐 -->
+
+        <div class="detail-bottom clearfix">
+             <div class="detail-main">
+                <div class="detail-tabs">
+                    <a class="item" href="javascript:;">详情描述</a>
+                    <a class="item" href="javascript:;">规格参数</a>
+                    <a class="item" href="javascript:;">商品评价</a>
+                </div>
+                <div class="tab-con">
+                    <div class="mod-type-cont">
+                        <!-- <img src="/static/index/uploads/10.jpg" alt="" /> -->
+                         {foreach $a as $v}{$v.detail|raw}{/foreach}
+                    </div>
+                </div>
+                <div class="tab-con">
+                    <div class="detail-stand">
+                        <div class="tit">主体规格参数</div>
+                        {foreach $a as $v}
+                        <div class="attr">
+                            <div class="name">品牌</div>
+                            <div class="value">{$v.brand}</div>
+                        </div>
+                        <div class="attr">
+                            <div class="name">材质</div>
+                            <div class="value">{$v.caizhi}</div>
+                        </div>
+                        
+                        <div class="attr">
+                            <div class="name">商品名</div>
+                            <div class="value">{$v.name}</div>
+                        </div>
+                        <div class="attr">
+                            <div class="name">颜色</div>
+                            <div class="value">{foreach $b as $cv}{$cv.color}&nbsp;&nbsp;&nbsp;{/foreach}</div>
+                        </div>
+                        <div class="attr">
+                            <div class="name">尺码</div>
+                            <div class="value">{foreach $size as $sv}{$sv}&nbsp;&nbsp;&nbsp;{/foreach}</div>
+                        </div>
+                        <div class="attr">
+                            <div class="name">商品图片</div>
+                            <div class="value"><img src="/goods_uploads/{$v.img}" alt=""></div>
+                        </div>
+                         {/foreach}
+                    </div>
+                </div>
+                <div class="tab-con">
+                    <div class="detail-pj">
+                        <div class="detail-pj-nav list clearfix">
+                            <div class="col col1">评价心得</div>
+                            <div class="col col3">商家回复</div>
+                            <div class="col col4">评价用户</div>
+                        </div>
+                        <div class="detail-pj-cont">
+
+                            <!-- <div class="reply list clearfix">
+                                <div class="col col1">不错，一次完美购物<span class="time">2016-02-23  15:56</span></div>
+                                <div class="col col2">[好评]</div>
+                                <div class="col col3">尺码:XL<br>颜色分类：灰色</div>
+                                <div class="col col4"><img class="hdpic" width="40" height="40" src=""><div>糖果</div></div>
+                            </div>
+                            <div class="reply list clearfix">
+                                <div class="col col1">不错，一次完美购物<span class="time">2016-02-23  15:56</span></div>
+                                <div class="col col2">[好评]</div>
+                                <div class="col col3">尺码:XL<br>颜色分类：灰色</div>
+                                <div class="col col4"><img class="hdpic" width="40" height="40" src=""><div>糖果</div></div>
+                            </div> -->
+
+                            {foreach $pingjia as $v}
+                        
+                            <div class="reply list clearfix">
+                                <div class="col col1">{$v.content}<span class="time">{$v.addtime}</span></div>
+                                <div class="col col2">{$v.huifu}</div>
+                                <div class="col col3"><br></div>
+                                <div class="col col4"><div>{$v.username}</div></div>
+                            </div>
+                           
+                        
+                    {/foreach}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="detail-aside">
+                
+            <div class="detail-aside-box">        
+                <div class="big-tit">店铺热销</div>
+                    <ul class="detail-hot">
+                        {foreach $hot as $v}
+                        <li>
+                            <a href="{:url('Shop/goods_detail')}?id={$v.id}" class="figure"><img src="/goods_uploads/{$v.img}" alt="" /></a>
+                            <div class="name"><a href="{:url('Shop/goods_detail')}?id={$v.id}">{$v.type}{$v.name}</a></div>
+                            <div class="price">
+                                <span class="now"><input class="count-input" value="{$v.price}"  type="hidden" name="num" id="price"/>￥{$v.price}</span><span class="dft">￥{$v.price+20}</span>
+                            </div>
+                        </li>
+                        {/foreach}
+                        <!-- <li>
+                            <a href="" class="figure"><img src="/static/index/uploads/9.jpg" alt="" /></a>
+                            <div class="name"><a href="">诗凡黎2016夏装新品海军风</a></div>
+                            <div class="price">
+                                <span class="now">¥149.00</span><span class="origin">¥298.00</span>
+                            </div>
+                        </li> -->
+                    </ul>
+               </div> 
+            </div>
+        </div>
+    </div>
+
+    <!--脚部-->
+    <div class="fatfooter">
+
+    </div>
+    <!--脚部-->
+</body>
+<!-- <script src="js/jquery.js"></script> -->
+<link rel="stylesheet" href="/static/index/js/slick/slick.css"/>
+<script src="/static/index/js/slick/slick.min.js"></script>
+<script src="/static/index/js/global.js"></script>
+<script>
+    /*商品数量操作*/
+    function goodsCount(o){
+            if(!(o instanceof Object)) var o={};
+            var inputCell = o.inputCell || ".count-input",
+                minusCell = o.minusCell || ".count-minus",
+                plusCell = o.plusCell || ".count-plus",
+                disClass = o.disClass || "disabled";
+            return this.each(function(){
+                var $wrap = $(this),
+                    $input = $(inputCell,$wrap),
+                    $minus = $(minusCell,$wrap),
+                    $plus = $(plusCell,$wrap),
+                    maxnum=parseInt($wrap.attr('data-max')) || false,
+                    minnum=$wrap.attr('data-min') || 1,
+                    initnum=$input.val() || minnum;
+                /*初始*/
+                $input.val(initnum);
+                checkIlegal();
+                function checkIlegal(){
+                    var value =parseInt($input.val());
+
+                    //
+                     if (maxnum&&value>maxnum) {
+                        $input.val(maxnum);
+                    }
+                    else if (value<minnum) {
+                        $input.val(minnum);
+                    }
+                    if(value<=minnum){
+                        $minus.addClass(disClass);
+                    }else{
+                        $minus.removeClass(disClass);
+                    }
+                    if (value>=maxnum) {
+                        $plus.addClass(disClass);
+                    }else {
+                        $plus.removeClass(disClass);
+                    }
+
+                }
+                function checknull() {
+                    var value =$input.val();
+                    if(value === "" || value === "0"){
+                        $input.val(minnum);
+                    }
+                }
+                $input.keyup(function(evt){
+                    var value = $(this).val();
+                    var newvalue = value.replace(/[^\d]/g,"");
+                    $(this).val(newvalue);
+                    checknull();
+                });
+                $input.blur(function(){
+                    checknull();
+                    checkIlegal();
+                })
+
+                $minus.click(function(){
+                    minus();
+                     checkIlegal();
+                });
+
+                $plus.click(function(){
+                    add();
+                    checkIlegal();
+                });
+
+                function add () {
+                    var value = $input.val();
+                    var plus = parseInt(value)+1;
+                    $input.val(plus);
+                }
+                function minus () {
+                    var value = parseInt($input.val());
+                    var minus = value-1;
+                    $input.val(minus);
+                }
+            });
+        }
+        $.fn.goodsCount = goodsCount;
+</script>
+
+<script >
+    $(function () {
+
+        +function () {
+            var index=0,
+            bsrc='',
+            timer=null,
+            box=$('.detail-show'),
+            origin=$('.origin-show'),
+            bigimg=box.find('.big-pic'),
+            tumb=box.find('.thumb-show'),
+            tumbItem=tumb.find('.item'),
+            zoomup=box.find('.zoomup'),
+            zoomshow=box.find('.zoom-show');
+
+            /*图片切换*/
+            tumbItem.on('mouseenter',function () {
+                index=$(this).index();
+                clearTimeout(timer);
+                timer=setTimeout(function (){
+                    update(index);
+                }, 300)
+
+            });
+
+            function update (index) {
+                bsrc=tumbItem.eq(index).find('.s-pic').attr('bsrc');
+                bigimg.attr('src', bsrc);
+                tumbItem.find('.s-pic').removeClass('active').end().eq(index).find('.s-pic').addClass('active');
+            }
+
+            update(index);
+
+            if ($('.detail-show .thumb-show .item').length>5) {
+                $('.detail-show .thumb-show').slick({
+                    slidesToShow: 5,
+                    infinite:false
+                });
+            }
+
+            /*放大镜*/
+            origin.on('mouseover mouseout',function (e) {
+                if (e.type=="mouseover") {
+                    var oX=$(this).offset().left,
+                    oY=$(this).offset().top,
+                    zX=e.pageX,
+                    zY=e.pageY,
+                    pW=$(this).outerWidth(),
+                    pH=$(this).outerHeight(),
+                    zW=zoomup.outerWidth(),
+                    zH=zoomup.outerHeight(),
+                    scale=pW/zW,
+                    zsW=zoomshow.width()*scale,//放大后的宽度
+                    factor=zsW/pW
+
+                    zoomshow.find('img').attr('src',bigimg.attr('src')).width(zsW);
+
+                    $(document).on('mousemove.zoom',function (e) {
+                        zX=e.pageX-oX- zW/2;
+                        zY=e.pageY-oY- zH/2;
+                        move();
+                    });
+
+                    function move () {
+                        zX=zX<=0?0:zX;
+                        zX=zX>=pW-zW?pW-zW:zX;
+                        zY=zY<=0?0:zY;
+                        zY=zY>=pH-zH?pH-zH:zY;
+                        zoomup.show().css({top:zY,left:zX});
+                        zoomshow.show().find('img').css({top:-zY*factor,left:-zX*factor});
+                    }
+                }
+                else {
+                    $(document).off('mousemove.zoom');
+                     zoomup.hide()
+                     zoomshow.hide();
+                }
+            });
+        }();
+
+        $('.mod-numbox').goodsCount(); //数量加减
+
+        $('.detail-main').zTab({
+            tabnav:'.detail-tabs',
+            trigger:'click'
+        });
+    });
+</script>
+<script>
+    //加入购物车
+    function ins(ob,id){
+        var num=$("#nums").val();
+        var price=$("#price").val();
+        var brand=$("#brand").val();
+        var name=$("#name").val();
+        // alert(brand);
+        // alert(id);
+        $.ajax({
+            type:'get',
+            url:"{:url('Shop/cart')}",
+            data:{id:id,num:num,price:price,brand:brand,gname:name},
+            success:function(data){
+                // alert(data);
+                if (data==0) {
+                    alert("请先登录");
+                    location="{:url('Login/index')}";
+                    // layer.msg("添加成功！");
+                }else if(data==1){
+                    alert("请选择颜色");
+                }else if(data==2){
+                    alert("请选择尺码");
+
+                }else{
+                    alert(data);
+                }
+            }
+        });
+    }
+    // 立即购买
+    function buy(ob,id){
+        var num=$("#nums").val();
+        var price=$("#price").val();
+        var brand=$("#brand").val();
+        var name=$("#name").val();
+        // alert(id);
+        $.ajax({
+            type:'get',
+            url:"{:url('Shop/buy')}",
+            data:{id:id,num:num,brand:brand,name:name,price:price},
+            success:function(data){
+                // alert(data);
+                if (data==0) {
+                    alert("请先登录");
+                    location="{:url('Login/index')}";
+                    // layer.msg("添加成功！");
+                }else if(data==1){
+                    alert("请选择颜色");
+                }else if(data==2){
+                    alert("请选择尺码");
+
+                }else if(data==3){
+                    alert("库存不足");
+
+                }else{
+
+                    // alert(data);
+                    location="{:url('Car/buy')}?data="+data;
+                }
+            }
+        });
+    }
+    //添加收藏
+    function like(ob,id){
+        // alert(id);
+        $.ajax({
+            type:'post',
+            url:"{:url('Shop/like')}",
+            data:{id:id},
+            success:function(data){
+                // alert(data);
+                if (data==0) {
+                    alert("请先登录");
+                    location="{:url('Login/index')}";
+                    // layer.msg("添加成功！");
+                }else{
+                    alert(data);
+                    // layer.msg("添加失败！");
+                }
+            }
+        });
+    }
+
+
+    //点击颜色框
+    $(".zhao").click(function(){
+        var _that = $(this);
+        _that.css("border","1px solid red");
+        _that.siblings().css("border","1px solid #fff");
+        var cid = _that.children().eq(0).val();
+        // alert(cid);
+        var image = _that.children().eq(1).val();
+        var color = _that.children().eq(2).val();
+        // alert(cid);
+        // $(".bimg").attr("src","/goods_uploads/{image}");
+     $.ajax({
+        type:'get',
+        url:"{:url('Shop/col')}",
+        data:{cid:cid,image:image,color:color},
+        success:function(data){
+            $("#kucun").show();
+            $("#kucun").children().eq(0).html(data);
+            // alert(data);
+            // if (data==1) {
+            //     layer.msg("添加成功！");
+            // }else{
+            //     layer.msg("添加失败！");
+            // }
+            },
+
+        });
+    })
+    //点击尺码框
+    $(".hai").click(function(){
+    var _that = $(this);
+    _that.css("border","1px solid red");
+    _that.siblings().css("border","1px solid #fff");
+    var size = _that.children().eq(0).val();
+    // alert(size);.
+    $.ajax({
+        type:'get',
+        url:"{:url('Shop/size')}",
+        data:{size:size},
+        success:function(data){
+            // alert(data);
+            // if (data==1) {
+            //     layer.msg("添加成功！");
+            // }else{
+            //     layer.msg("添加失败！");
+            // }
+        },
+
+    });
+})
+
+</script>
+</html>

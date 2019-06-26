@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>找回密码</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/login.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/index/js/jquery-1.8.3.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<!--头部-->
+    <div class="login-header">
+        <div class="wrapper">
+            <a href="" class="logo">
+                <img src="/static/index/img/logo3.png" alt="" />
+            </a>
+            <div class="zp">
+                <span class="ico"></span>
+                <div>正品保障</div>
+            </div>
+        </div>
+    </div>
+    <div class="main-wrap">
+        <div class="wrapper">
+            <div class="center-box ">
+                <div class="box-hd box-hd-tabs">
+                    <a href="javascript:;" class="item" style="margin-left: 80px;">手机找回密码</a>
+                </div>
+                <div class="tab-con">
+                    <form action="{:url('Login/xyb')}" method="post">
+                        <label class="txtin-box">
+                            <input class="txtin" type="text" name="phone" id="phone" placeholder="手机" />
+                        </label>
+                        <label class="txtin-box txtin-box-code">
+                            <input class="txtin" type="text" name="code" placeholder="短信验证码" />
+                            <div class="get-yzm" id="code">获取验证码</div>
+                        </label>
+                        <input type="submit" class="tj id="xyb" value="下一步">
+                        <!-- <input class="tj" type="submit" value="完&ensp;成" /> -->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="login-footer">
+        安徽智迈科技股份有限公司 版权所有 Copyright © 2009-2016 法律顾问：吕海波律师  备案号：皖ICP备06001897
+        <div class="authentication">
+            <a href=""><img src="/static/index/uploads/35.jpg" alt="" /></a>
+            <a href=""><img src="/static/index/uploads/36.jpg" alt="" /></a>
+            <a href=""><img src="/static/index/uploads/37.jpg" alt="" /></a>
+            <a href=""><img src="/static/index/uploads/38.jpg" alt="" /></a>
+        </div>
+    </div>
+</body>
+<script src="/static/index/js/jquery.js"></script>
+<link rel="stylesheet" href="/static/index/js/icheck/style.css"/>
+<script src="/static/index/js/icheck/icheck.min.js"></script>
+<script src="/static/index/js/global.js"></script>
+<script>
+     $(function () {
+        $('.center-box').zTab({
+            tabnav:'.box-hd-tabs',
+            trigger:'click'
+        });
+     });
+       $("#code").mouseenter(function(){
+        $("#code").css("cursor","pointer");
+        });
+    $("#code").click(function(){
+        // alert ($("#phone").val());
+        var phone=$("#phone").val();
+        
+            $.ajax({
+                url:"{:url('login/code')}",
+                type:"get",
+                data:{phone:phone},
+                success:function(data){
+                    alert(data);
+                    if(data == 1){
+                        layer.msg('验证码发送成功', {icon:6,time: 1000 });
+                    }else{
+                        layer.msg('发送失败', {icon:6,time: 1000 });
+                    }
+                }
+            })
+     });
+    //  $("#xyb").click(function(){
+    //     if()
+    //     $.ajax({
+    //         url:"{:url('login/code')}",
+    //         type:"get",
+    //         data:{phone:phone},
+    //         success:function(data){
+    //             alert(data);
+    //             if(data == 1){
+    //                 alert("发送成功");
+    //             }else{
+    //                 alert("发送失败");
+    //             }
+    //         }
+    //     })
+    // });
+</script>
+</html>

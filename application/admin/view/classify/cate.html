@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- 分页 -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+     <script type="text/javascript" src="/static/index/js/layer/layer.js"></script>
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+         <form class="layui-form layui-col-md12 x-so layui-form-pane" action="{:url('Classify/seek')}" method="get">
+         <input class="layui-input" placeholder="分类名"  name="type" value="">
+         <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="ss"><i class="layui-icon"></i>搜索</button>
+        </form>
+
+
+       <form class="layui-form layui-col-md12 x-so layui-form-pane" action="{:url('Classify/add')}?pid=0">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="btn1"><i class="layui-icon"></i>增加</button>
+        </form>
+      </div>
+<!--       <blockquote class="layui-elem-quote">每个tr 上有两个属性 cate-id='1' 当前分类id fid='0' 父级id ,顶级分类为 0，有子分类的前面加收缩图标<i class="layui-icon x-show" status='true'>&#xe623;</i></blockquote> -->
+      <xblock>
+<!--         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
+        <span class="x-right" style="line-height:40px">共有数据：{$list1} 条</span>
+      </xblock>
+      <table class="layui-table layui-form">
+        <thead>
+          <tr>
+            <th >编号</th>
+            <th>类别名称 </th>
+            <th >pid</th>
+            <th >path</th>
+            <th >添加时间</th>
+            <th >操作</th>
+        </thead>
+        <tbody class="x-cate">
+         {foreach $list as $v}
+         
+          <tr cate-id='1' fid='0'>
+            <td>{$v.id}</td>
+            <td>
+              <i class="layui-icon x-show" status='true'>{$v.type}</i>
+            </td>
+            <td>{$v.pid}</td>
+            <!-- <td>
+              <input type="checkbox" name="switch"  lay-text="开启|停用"  checked="" lay-skin="switch">
+            </td> -->
+            <td>{$v.path}</td>
+            <td>{$v.addtime}</td>
+            <td class="td-manage">
+              <a href="{:url(\'classify/edit\')}?id={$v.id}&pid={$v.pid}">
+              <button class="layui-btn layui-btn layui-btn-xs"   ><i class="layui-icon">&#xe642;</i>编辑</button></a>
+              {if $v.num <'2' }
+              <a href="{:url('Classify/add')}?pid={$v.id}"><span class="layui-btn layui-btn-warm layui-btn-xs"><i class="layui-icon">&#xe642;</i>添加子栏目</span></a>
+              {/if}
+              <button class="layui-btn-danger layui-btn layui-btn-xs"  onclick="del({$v.id},this)" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
+            </td>
+          </tr>
+          {/foreach}
+        </tbody>
+      </table>
+      {$list|raw}
+    </div>
+
+    <script>
+      
+      //删除
+      function del(id,ob){
+         layer.confirm('确定要删除吗？"', {
+            btn: ['确定','取消'] //按钮
+          }, function(){
+            $.ajax({
+                    type:"get",
+                    url:"{:url('Classify/del')}",
+                    data:{id:id},
+                    success:function(data){
+                      if (parseInt(data)>0) {
+                        $(ob).parents("tr").remove();
+                        layer.msg('删除成功！');
+                        location="";
+                      }else{
+                        layer.alert('删除失败！');
+                      }
+                    },
+                    // error:function(){
+                    //   alert("ajax请求失败！");
+                    // }
+              })
+          });    
+        } 
+
+
+       // $("#ss").on("click",function(){
+       //    var type=$('#type').val();
+
+       //    $.ajax({
+       //      url: "{:url('Classify/seek')}",
+       //      type: 'get',
+       //      data: {type:type},
+       //      success:function(data){     
+       //        // console.log(data);
+       //        alert(data);
+       //         // location.href="{:url('Classify/cate')}";
+       //        }
+       //      })
+       //    })
+
+  
+
+
+      function delAll (argument) {
+
+        var data = tableCheck.getData();
+  
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+    </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </body>
+
+</html>

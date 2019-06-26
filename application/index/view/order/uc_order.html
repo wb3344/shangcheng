@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>订单</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/uc.css" rel="stylesheet"/>
+    <!-- 分页 -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!-- 分页 -->
+</head>
+<body>
+    <!--头部-->
+    <div class="topper">
+        <div class="wrapper">
+            <div class="left-bar">
+                <div class="back-home divider">
+                     <em></em><a href="{:url('Index/index')}">商城首页</a>
+                </div>
+                
+            </div>
+            <div class="right-bar">
+                {if $list==null}
+                 <div class="item"><a href="{:url('login/index')}">登录<span class="txt-theme"></span></a></div>
+                <div class="logout divider"><a href="{:url('login/sign')}">注册</a></div>
+                <span class=""></span>
+                <div class="cart"><em></em><a href="">购物车</a></div>
+                <div class="order"><em></em><a href="">我的订单</a></div>
+                <div class="fav"><em></em><a href="">我的收藏</a></div>
+                <div class="help"><em></em><a href="">个人中心</a></div>
+            {else /}
+                <div class="item"><a href="{:url('order/uc')}">欢迎您:<span style="color:red" class="txt-theme">{$list}</span></a></div>
+                <div class="logout divider"><a href="{:url('login/logout')}">退出</a></div>
+                <span class=""></span>
+            
+                <div class="cart"><em></em><a href="{:url('Car/cart')}">购物车</a></div>
+                <div class="order"><em></em><a href="{:url('Order/uc_order')}">我的订单</a></div>
+                <div class="fav"><em></em><a href="{:url('Myself/uc_fav')}">我的收藏</a></div>
+                <div class="help"><em></em><a href="{:url('Order/uc')}">个人中心</a></div>
+            {/if}
+            </div>
+        </div>
+    </div>
+    <div class="uc-header-bg">
+        <div class="uc-header wrapper">
+            <a class="logo" href="{:url('Index/index')}"><img src="/static/index/img/logo2.png" alt="" /></a>
+            <div class="back-home"><a href="{:url('Index/index')}">返回商城首页</a></div>
+            <ul class="uc-nav">
+                <li><a href="">首页</a></li>
+                <li class="toggle">
+                    <span class="label">账户设置<i class="iconfont"></i></span>
+                    <div class="toggle-cont">
+                        <a href="{:url('Myself/uc_account')}">个人信息</a>
+                        <a href="{:url('Safe/uc_safe')}">安全设置</a>
+                        <a href="{:url('Order/uc_address')}">收货地址</a>
+                    </div>
+                </li>
+                
+            </ul>
+            <div class="schbox">
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper uc-router">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span><a href="{:url('Order/uc')}">个人中心</a></span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_order')}">我的订单</a></li>
+                        <li><a class="active" href="{:url('Myself/uc_fav')}">我的收藏</a></li>
+                        <li><a href="{:url('Myself/uc_footprint')}">浏览历史</a></li>
+                        <li><a href="{:url('Order/uc_apply_refund')}">退货</a></li>
+                    </ul>
+                    
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Myself/uc_account')}">账户信息</a></li>
+                        <li><a href="{:url('Safe/uc_safe')}">账户安全</a></li>
+                        <li><a href="{:url('Order/uc_address')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_allevaluate')}">商品评价</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">我的订单</div>
+                    <div class="uc-panel-bd">
+                        <div class="uc-sort">
+                            <div class="uc-tabs">
+                                <a class="item active" href="{:url('Order/uc_order')}">所有订单</a>
+                                <a class="item" href="{:url('Order/uc_order')}?state=5">待付款</a>
+                                <a class="item" href="{:url('Order/uc_order')}?state=1">待发货</a>
+                                <a class="item" href="{:url('Order/uc_order')}?state=2">待收货</a>
+                                <a class="item" href="{:url('Order/uc_order')}?state=3">待评价</a>
+                            </div>
+                            <div class="uc-search">
+                                <form action="">
+                                    <input type="text" class="sch-input" placeholder="输入商品名称,订单号，商品编号" />
+                                    <button class="sch-btn"><i class="iconfont icon-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="uc-table">
+                            <thead>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th width="120"></th>
+                            </thead>
+                            {foreach $order as $v}
+                            <tr class="hd order-meta">
+                                <td colspan="4">
+                                    <div class="left">   订单号:{$v.ornumber} </div>
+                                    {if $v.state==4 || $v.state==5}
+                                    <div class="right">
+                                    <form action="{:url('order/shanchu')}" method="post">
+                                    <input type="hidden" value="{$v.id}" name="id">
+                                        <button>
+                                            <span class="del iconfont icon-shanchu"></span>
+                                        </button>
+                                    </form>
+                                    </div>
+                                    {else /}
+
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr class="order-goods">
+                                <td>
+                                    <div class="goods-info">
+                                        <img class="figure" src="/goods_uploads/{$v.img}" alt="" /> 
+                                        {if $v.state == 6}
+                                        <a class="text-info refund" href="{:url('order/tuihuo')}?state=3&id={$v.id}">取消退货</a>
+                                        {elseif $v.state == 3/}
+                                        <a class="text-info refund" href="{:url('order/tuihuo')}?state=6&id={$v.id}">申请退货
+                                        </a>
+                                        {/if}
+                                        <div class="info">
+                                            <div>{$v.goodsname}</div>
+                                            <div>{$v.price}元</div>
+                                        </div>
+                                    </div>
+                                <td>
+                                    金额：<span class="text-theme fwb">{$v.sum}元</span>
+                                </td>
+                                <td>
+                                {switch $v.state}
+                                    {case 1}已付款<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br />
+                                    <a class="text-info" href="">提醒发货</a> -->{/case}
+                                    {case 2}已发货<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br />
+                                    <a class="text-info" href="">查看物流</a> -->{/case}
+                                    {case 3}已收货,未评价<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br />
+                                    <a class="text-info" href="">去评价</a> -->{/case}
+                                    {case 4}已评价,订单完成{/case}
+                                    {case 5}未付款<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br /> -->{/case}
+                                    {case 6}申请退货中<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br /> -->{/case}
+                                    {case 7}退款成功<!-- <a class="text-info" href="{:url('order/uc_order_detail')}">订单详情</a><br /> -->{/case}
+                                {/switch}
+
+                                </td>
+                                {switch $v.state}
+                                    {case 1}
+                                    <td>
+                                        <span class="ui-btn-theme uc-btn-md">商家发货中</span>
+                                    </td>
+                                    {/case}
+                                    {case 2}
+                                    <td>
+                                        <a href="{:url('Order/queren')}?state=3&id={$v.id}" class="ui-btn-theme uc-btn-md">确认收货</a>
+                                    </td>
+                                    {/case}
+                                    {case 3}
+                                    <td>
+                                        <a href="{:url('order/uc_evaluate')}?id={$v.id}" class="ui-btn-theme uc-btn-md">去评价</a>
+                                    </td>
+                                    {/case}
+                                    {case 4}
+                                    <td>
+                                        <a href="{:url('index/index')}" class="ui-btn-theme uc-btn-md">去逛逛</a>
+                                    </td>
+                                    {/case}
+                                    {case 5}
+                                    <td>
+                                        <a href="{:url('car/pay1')}" class="ui-btn-theme uc-btn-md">去付款</a>
+                                    </td>
+                                    {/case}
+                                    {/switch}
+
+                                </td>
+                                {/foreach}
+                            </tr>
+                        </table>
+                      
+
+                        {$order|raw}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--脚部-->
+    <div class="fatfooter">
+
+    </div>
+    <!--脚部-->
+</body>
+<script src="js/jquery.js"></script>
+<link rel="stylesheet" href="js/icheck/style.css"/>
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/global.js"></script>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>申请退款/退款完成</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/static/index/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/static/index/css/common.css" rel="stylesheet"/>
+    <link href="/static/index/css/uc.css" rel="stylesheet"/>
+</head>
+<body>
+    <!--头部-->
+    <div class="topper">
+        <div class="wrapper">
+            <div class="left-bar">
+                <div class="back-home divider">
+                    <em></em><a href="{:url('Index/index')}">商城首页</a>
+                </div>
+                
+            </div>
+            <div class="right-bar">
+                {if $list==null}
+                 <div class="item"><a href="{:url('login/index')}">登录<span class="txt-theme"></span></a></div>
+                <div class="logout divider"><a href="{:url('login/sign')}">注册</a></div>
+                <span class=""></span>
+                <div class="cart"><em></em><a href="">购物车</a></div>
+                <div class="order"><em></em><a href="">我的订单</a></div>
+                <div class="fav"><em></em><a href="">我的收藏</a></div>
+                <div class="help"><em></em><a href="">个人中心</a></div>
+            {else /}
+                <div class="item"><a href="{:url('order/uc')}">欢迎您:<span style="color:red" class="txt-theme">{$list}</span></a></div>
+                <div class="logout divider"><a href="{:url('login/logout')}">退出</a></div>
+                <span class=""></span>
+            
+                <div class="cart"><em></em><a href="{:url('Car/cart')}">购物车</a></div>
+                <div class="order"><em></em><a href="{:url('Order/uc_order')}">我的订单</a></div>
+                <div class="fav"><em></em><a href="{:url('Myself/uc_fav')}">我的收藏</a></div>
+                <div class="help"><em></em><a href="{:url('Order/uc')}">个人中心</a></div>
+            {/if}
+            </div>
+        </div>
+    </div>
+    <div class="uc-header-bg">
+        <div class="uc-header wrapper">
+            <a class="logo" href="{:url('Index/index')}"><img src="/static/index/img/logo2.png" alt="" /></a>
+            <div class="back-home"><a href="{:url('Index/index')}">返回商城首页</a></div>
+            <ul class="uc-nav">
+                <li><a href="">首页</a></li>
+                <li class="toggle">
+                    <span class="label">账户设置<i class="iconfont"></i></span>
+                    <div class="toggle-cont">
+                        <a href="{:url('Myself/uc_account')}">个人信息</a>
+                        <a href="{:url('Safe/uc_safe')}">安全设置</a>
+                        <a href="{:url('Order/uc_address')}">收货地址</a>
+                    </div>
+                </li>
+                
+            </ul>
+            <div class="schbox">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper uc-router">
+       <ul>
+            <li><a href="{:url('Index/index')}">首页</a></li>
+            <li><span class="divider"></span></li>
+            <li><span><a href="{:url('Order/uc')}">个人中心</a></span></li>
+        </ul>
+    </div>
+
+    <div class="wrapper">
+        <div class="uc-main clearfix">
+            <div class="uc-aside">
+                <div class="uc-menu">
+                    <div class="tit">订单中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_order')}">我的订单</a></li>
+                        <li><a class="active" href="{:url('Myself/uc_fav')}">我的收藏</a></li>
+                        <li><a href="{:url('Myself/uc_footprint')}">浏览历史</a></li>
+                        <li><a href="{:url('Order/uc_apply_refund')}">退货</a></li>
+                    </ul>
+                    
+                    <div class="tit">账户中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Myself/uc_account')}">账户信息</a></li>
+                        <li><a href="{:url('Safe/uc_safe')}">账户安全</a></li>
+                        <li><a href="{:url('Order/uc_address')}">收货地址</a></li>
+                    </ul>
+                    <div class="tit">消息中心</div>
+                    <ul class="sublist">
+                        <li><a href="{:url('Order/uc_allevaluate')}">商品评价</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uc-content">
+                <div class="uc-panel">
+                    <div class="uc-bigtit">退款/退货</div>
+                    <div class="uc-panel-bd">
+                    {foreach $order as $v}
+                        <table class="refund-returns-list">
+                            <tr class="head bd-t">
+                                <td width="370" class="first">商品信息</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="item-head">
+                                <td colspan="4">
+                                    <div class="fl">
+                                        <span class="ml15"><a class="sname" href=""></a></span>
+                                    </div>
+                                    <div class="fr">申请时间：{$v.addtime}</div>
+                                </td>
+                            </tr>
+                            <tr class="item">
+                                <td class="first">
+                                    <div class="good-desc">
+                                        <img class="gimg" src="/goods_uploads/{$v.img}" alt="" />
+                                        <div class="ginfo">
+                                            {$v.goodsname}<br />订单编号：{$v.ornumber}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>单价：{$v.price}x{$v.num}</td>
+                                <td>合计：<span class="text-danger">{$v.sum}元</span></td>
+                                {if $v.state==6}
+                                <td><a href="{:url('order/tuihuo')}?state=3&id={$v.id}">取消退款</a></td>
+                                {else if $v.state==7}
+                                <td>退款成功</td>
+                                {/if}
+                                
+                                    <!-- <span class="btn-get-wl" >物流信息<i class="caret"></i>
+                                        <div class="wl-toggle">
+                                            <div class="inner-box">
+                                                <i class="arrow"></i>
+                                                <div class="wl-hd">百汇世通:846721123123</div>
+                                                <div class="wl-item active">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">已签收,签收凭取货吗签收，感谢使用百汇世通及速递易【自提柜】期待再次为你服务</div>
+                                                <div class="wl-item">以上为最新信息跟踪信息 <a class="text-info" href="">查看全部</a></div>
+                                            </div>
+                                        </div>
+                                    </span> -->
+                                </td>
+                            </tr>
+                        </table>
+                        <center>
+<!--                         <div class="submit-group">
+                                <a class="ui-btn-theme uc-btn-lg" href="{:url('order/tuihuo')}?state=6&id={$v.id}" />提交退款申请</a>
+                        </div> -->
+                        </center>
+                    {/foreach}
+<!--                         <div class="refund-returns-panel mt15">
+                            <div class="tabs">
+                                <a class="item active" href="">我要退货</a><a class="item" href="">我要退款（无需退货）</a>
+                            </div>
+                            <div class="panel-bd">
+                                <div class="control-group">
+                                    <div class="hd"><em>*</em>是否收货：</div>
+                                    <div class="bd">
+                                        <label class="check"><input type="radio" name="sex" />未收到货</label>
+                                        <label class="check ml25"><input type="radio" name="sex" />已收到货</label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="hd"><em>*</em>退款原因：</div>
+                                    <div class="bd"><select name="" id="" class="ui-txtin"><option value="">请选择</option></select></div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="hd"><em>*</em>退款金额：</div>
+                                    <div class="bd"><input class="ui-txtin" type="text" name=""  value="499.00" /><span class="ml10 text-muted">最多499.00元</span></div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="hd vat">退款说明：</div>
+                                    <div class="bd"><textarea name="" id=""  class="ui-txtin" style="width:560px;height:90px;"></textarea><span class="vab dib ml10">还可以输入200字</span></div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="hd vat">上传凭证：</div>
+                                    <div class="bd">
+                                        <label class="ui-uploads">
+                                            <span class="upload-img"></span>
+                                            <input type="file" name="" id="" />
+                                        </label>
+                                        <div class="mt10 text-muted">每张图片大小不超过5M，最多3张，支持gif、jpg、png、bmp格式</div>
+                                    </div>
+                                </div>
+                                <div class="submit-group">
+                                    <input class="ui-btn-theme uc-btn-lg" type="submit" value="提交退款申请" />
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--脚部-->
+    <div class="fatfooter">
+
+    </div>
+    <!--脚部-->
+</body>
+<script src="/static/index/js/jquery.js"></script>
+<link rel="stylesheet" href="/static/index/js/icheck/style.css"/>
+<script src="/static/index/js/icheck/icheck.min.js"></script>
+<script src="/static/index/js/laydate/laydate.js"></script>
+<script src="/static/index/js/global.js"></script>
+<script>
+    $('.check').iCheck({
+            radioClass: 'sty2-radio'
+    });
+</script>
+</html>

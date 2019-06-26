@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+        <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <!-- 分页 -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!-- 分页 -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+
+        
+          <form class="layui-form layui-col-md12 x-so layui-form-pane" action="{:url('Goods/goods_list1')}" method="get">
+              <input class="layui-input" placeholder="输入关键字" name="where" required="">
+              <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>搜索</button>
+          </form>
+        
+           
+       
+      </div>
+      
+      <xblock>
+         <a href="{:url('Goods/goods_add')}"><button class="layui-btn"  lay-submit="" lay-filter="sreach" style="margin-right: 200px;"><i class="layui-icon"></i>增加</button></a>
+        <span class="x-right" style="line-height:40px">共有数据：{$num}条</span>
+      </xblock>
+      <table class="layui-table layui-form">
+        <thead>
+          <tr>
+            <th>商品编号</th>
+            <th>商品类别</th>
+            <th>商品名称</th>
+            <th>商品描述</th>
+            <th>商品图片</th>
+            <th>单价</th>
+            <th>状态</th>
+            <th>详情</th>
+            
+            
+            <th>操作</th>
+          </tr>
+        </thead> 
+        <tbody class="x-cate">
+        {foreach $list as $v}
+       
+    
+          <tr cate-id='1' fid='0' >
+            <td>{$v.id}</td>
+            <td>{$v.type}</td>
+            <td>{$v.name}</td>
+            <td>{$v.content}</td>
+            <td><img src="/goods_uploads/{$v.img}" alt="" width="50px" height="50px"></td>
+            <td>{$v.price}</td>
+            <td>{if $v.state=='1'}在售{else /}无货{/if}</td>
+            
+            
+            <td><a title="详情" href="{:url('Goods/goods_detail')}?gid={$v.id}">
+                <i class="layui-icon">详情</i>
+              </a></td>
+              <!-- <td><a title="图片" href="{:url('Goods/goods_addimg')}?gid={$v.id}">
+                <i class="layui-icon">添加图片</i>
+              </a></td> -->
+            
+            
+            <td class="td-manage">
+              <a href="{:url(\'Goods/goods_edit\')}?id={$v.id}')">
+              <button class="layui-btn layui-btn layui-btn-xs" ><i class="layui-icon">&#xe642;</i>编辑</button></a>
+             <!-- <button class="layui-btn layui-btn layui-btn-xs"><i class="layui-icon">&#xe642;</i>添加子栏目</button> -->
+              <button class="layui-btn-danger layui-btn layui-btn-xs"  onclick="member_del(this,{$v.id})" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
+            </td>
+          </tr>
+          
+        </tbody>
+        {/foreach}
+     </table>
+      {$list|raw}
+    </div>
+   
+    <script>
+      layui.use(['form'], function(){
+        form = layui.form;
+        
+      });
+
+      
+
+      /*用户-删除*/
+           function member_del(obj,id){
+        // alert(id);
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $(obj).parents("tr").remove();
+              location.href='del?id='+id;
+              layer.msg('已删除!',{icon:1,time:3000});
+          });
+      }
+
+
+
+      
+    </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+  </body>
+
+</html>
